@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using BVKMN.Models;
 
 namespace BVKMN
 {
@@ -17,7 +19,19 @@ namespace BVKMN
             var rate = FinancialFunctions.Rate(months, pmt, sum);
             var effect = FinancialFunctions.Effect(rate);
 
+            List<Payment> payments = PaymentsScheduler.GetPaymentsSchedule(sum, months, interestRate, pmt);
+
             Console.WriteLine($"BVKKMN: {effect * 100}");
+
+            Console.WriteLine();
+            Console.WriteLine("Payments schedule:");
+            Console.WriteLine();
+
+            for (int i = 0; i < payments.Count; i++)
+            {
+                Console.WriteLine($"{payments[i].PaymentNumber} \t {payments[i].Installment} \t {payments[i].Interest} \t {payments[i].Loan} \t {payments[i].Balance}");
+            }
+
             Console.ReadKey();
         }
     }
